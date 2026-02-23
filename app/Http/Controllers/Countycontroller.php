@@ -12,7 +12,10 @@ class Countycontroller extends Controller
      */
     public function index()
     {
-        //
+        $counties = County::all();
+
+        return view('hd_county.index', compact("counties"));
+        return view("hd_county.create");
     }
 
     /**
@@ -36,7 +39,7 @@ class Countycontroller extends Controller
         $county->postal_code = $request->postal_code;
         $county->save();
 
-        return redirect()->route("county.index")->with('success', 'County created successfully!');
+        return redirect()->route("hd_county.index")->with('success', 'County created successfully!');
 
     }
 
