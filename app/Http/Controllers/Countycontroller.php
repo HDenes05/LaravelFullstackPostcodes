@@ -15,7 +15,7 @@ class Countycontroller extends Controller
         $counties = County::all();
 
         return view('hd_county.index', compact("counties"));
-        return view("hd_county.create");
+        //return view("hd_county.create");
     }
 
     /**
@@ -39,7 +39,7 @@ class Countycontroller extends Controller
         $county->postal_code = $request->postal_code;
         $county->save();
 
-        return redirect()->route("hd_county.index")->with('success', 'County created successfully!');
+        return redirect()->route("county.index")->with('success', 'County created successfully!');
 
     }
 
@@ -48,7 +48,8 @@ class Countycontroller extends Controller
      */
     public function show(string $id)
     {
-        //
+        $county = County::find($id);
+        return view('hd_county.show', compact('county'));
     }
 
     /**
@@ -56,7 +57,8 @@ class Countycontroller extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $county = County::find($id);
+        return view('hd_county.edit', compact('county'));
     }
 
     /**
@@ -64,7 +66,11 @@ class Countycontroller extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $county = County::find($id);
+        $county->name = $request->name;
+        $county->save();
+
+        return redirect()->route('hd_county.index')->with('success', 'County modified successfully.');
     }
 
     /**
@@ -72,6 +78,10 @@ class Countycontroller extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $county = County::find($id);
+        $county->delete();
+
+        return redirect()->route('hd_county.index')->with('success', 'County deleted successfully.');
+    
     }
 }
